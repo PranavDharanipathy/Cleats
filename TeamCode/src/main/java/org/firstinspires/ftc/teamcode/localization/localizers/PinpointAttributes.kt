@@ -1,6 +1,4 @@
-@file:JvmName("PinpointAttributes")
-
-package org.firstinspires.ftc.teamcode.localization
+package org.firstinspires.ftc.teamcode.localization.localizers
 
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver
 
