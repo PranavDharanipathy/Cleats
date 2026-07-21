@@ -29,12 +29,14 @@ public class PinpointLocalizer extends Localizer {
 
     private double prevTime, currTime, startTime;
 
+    @Override
     public void setPose(Pose pose) {
 
         localizer.setPosition(Pose.poseToPose2D(pose));
         this.pose = pose;
     }
 
+    @Override
     public void update() {
 
         localizer.update();
