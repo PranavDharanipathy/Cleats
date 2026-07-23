@@ -48,14 +48,8 @@ public class PinpointLocalizer extends Localizer {
 
         if (deltaTime <= 0) return;
 
-        Pose newVelocity = new Pose(localizer.getVelX(DistanceUnit.INCH), localizer.getVelY(DistanceUnit.INCH), localizer.getHeadingVelocity(AngleUnit.RADIANS.getUnnormalized()));
-        Pose newAcceleration = newVelocity.minus(velocity).divideBy(deltaTime);
+        velocity = new Pose(localizer.getVelX(DistanceUnit.INCH), localizer.getVelY(DistanceUnit.INCH), localizer.getHeadingVelocity(AngleUnit.RADIANS.getUnnormalized()));
 
-        jerk = newAcceleration.minus(acceleration).divideBy(deltaTime);
-
-        acceleration = newAcceleration;
-
-        velocity = newVelocity;
     }
 
 }

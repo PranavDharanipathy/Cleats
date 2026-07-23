@@ -4,7 +4,7 @@ import org.firstinspires.ftc.teamcode.math.Pose;
 
 public abstract class Localizer {
 
-    protected Pose pose, velocity, acceleration, jerk;
+    protected Pose pose, velocity;
 
     protected double deltaTime;
 
@@ -12,8 +12,6 @@ public abstract class Localizer {
 
         pose = new Pose(0,0,0);
         velocity = new Pose(0,0,0);
-        acceleration = new Pose(0,0,0);
-        jerk = new Pose(0,0,0);
 
         deltaTime = 0;
     }
@@ -28,14 +26,6 @@ public abstract class Localizer {
 
     public Pose getVelocity() {
         return velocity;
-    }
-
-    public Pose getAcceleration() {
-        return acceleration;
-    }
-
-    public Pose getJerk() {
-        return jerk;
     }
 
     /// @return time between localizer updates in seconds.

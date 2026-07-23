@@ -28,12 +28,28 @@ public class Pose {
         this.heading = heading;
     }
 
+    public Pose add(Pose pose) {
+        return new Pose(x + pose.x, y + pose.y, MathHelper.normalizeAngleRad(heading + pose.heading));
+    }
+
     public Pose minus(Pose pose) {
         return new Pose(x - pose.x, y - pose.y, MathHelper.normalizeAngleRad(heading - pose.heading));
     }
 
+    public Pose divide(Pose pose) {
+        return new Pose(x / pose.x, y / pose.y, heading / pose.heading);
+    }
+
+    public Pose multiply(Pose pose) {
+        return new Pose(x * pose.x, y * pose.y, heading * pose.heading);
+    }
+
     public Pose divideBy(double value) {
-        return new Pose(x - value, y - value, heading - value);
+        return new Pose(x / value, y / value, heading / value);
+    }
+
+    public Pose multipleBy(double value) {
+        return new Pose(x * value, y * value, heading * value);
     }
 
     // conversions
