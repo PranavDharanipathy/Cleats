@@ -79,7 +79,11 @@ public class FinalLocalizer {
     }
 
     public void setPose(Pose pose) {
+
         localizer.setPose(pose);
+
+        prevVelocity = new Pose(0,0,0);
+        prevAcceleration = new Pose(0,0,0);
     }
 
     public void update() {
