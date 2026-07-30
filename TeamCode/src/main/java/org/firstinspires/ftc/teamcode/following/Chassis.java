@@ -26,9 +26,9 @@ public class Chassis {
 
     public void setDrivePower(double forward, double strafe, double turn) {
 
-        lf.setPower(forward - strafe - turn);
-        rf.setPower(forward + strafe + turn);
-        lb.setPower(forward + strafe - turn);
-        rb.setPower(forward - strafe + turn);
+        lf.setPower(forward + strafe + turn);
+        rf.setPower(forward - strafe - turn);
+        lb.setPower(forward - strafe + turn);
+        rb.setPower(forward + strafe - turn);
     }
 }

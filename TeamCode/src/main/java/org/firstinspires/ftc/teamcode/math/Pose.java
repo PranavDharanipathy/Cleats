@@ -14,6 +14,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 /// Pose Velocity is in inches per second.
 /// <p>
 /// Pose Acceleration is in inches per second squared.
+/// <p>
+/// Pose Jerk is in inches per second cubed.
 public class Pose {
 
     public double x, y, heading;
