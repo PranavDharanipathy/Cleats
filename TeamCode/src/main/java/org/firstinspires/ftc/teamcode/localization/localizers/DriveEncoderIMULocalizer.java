@@ -20,8 +20,8 @@ public class DriveEncoderIMULocalizer extends Localizer {
     private final Encoder backRight;
     private final IMU imu;
 
-    private final double drivetrainWidth;
-    private final double drivetrainLength;
+    private final double chassisWidth;
+    private final double chassisLength;
 
     private double headingOffset;
     private double previousRawImuHeading;
@@ -52,8 +52,8 @@ public class DriveEncoderIMULocalizer extends Localizer {
         backLeft.setDirection(attributes.getBackLeftDirection());
         backRight.setDirection(attributes.getBackRightDirection());
 
-        drivetrainWidth = attributes.getDrivetrainWidth();
-        drivetrainLength = attributes.getDrivetrainLength();
+        chassisWidth = attributes.getChassisWidth();
+        chassisLength = attributes.getChassisLength();
 
         imu = hardwareMap.get(IMU.class, attributes.getImuName());
         imu.initialize(attributes.getImuParameters());
@@ -97,7 +97,7 @@ public class DriveEncoderIMULocalizer extends Localizer {
         boolean imuFresh = Math.abs(MathHelper.normalizeAngleRad(rawImuHeading - previousRawImuHeading)) > IMU_STALE_THRESHOLD;
         previousRawImuHeading = rawImuHeading;
 
-        double encoderDeltaHeading = (-dLF + dRF - dLB + dRB) / (2d * (drivetrainWidth + drivetrainLength));
+        double encoderDeltaHeading = (-dLF + dRF - dLB + dRB) / (2d * (chassisWidth + chassisLength));
 
         double newHeading = imuFresh
                 ? MathHelper.normalizeAngleRad(rawImuHeading + headingOffset)

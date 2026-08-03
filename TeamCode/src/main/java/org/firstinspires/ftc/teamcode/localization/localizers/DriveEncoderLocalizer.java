@@ -15,8 +15,8 @@ public class DriveEncoderLocalizer extends Localizer {
     private final Encoder backLeft;
     private final Encoder backRight;
 
-    private final double drivetrainWidth;
-    private final double drivetrainLength;
+    private final double chassisWidth;
+    private final double chassisLength;
 
     private double prevTime, currTime;
 
@@ -40,8 +40,8 @@ public class DriveEncoderLocalizer extends Localizer {
         backLeft.setDirection(attributes.getBackLeftDirection());
         backRight.setDirection(attributes.getBackRightDirection());
 
-        drivetrainWidth = attributes.getDrivetrainWidth();
-        drivetrainLength = attributes.getDrivetrainLength();
+        chassisWidth = attributes.getChassisWidth();
+        chassisLength = attributes.getChassisLength();
 
         currTime = System.nanoTime() * 1e-9;
     }
@@ -70,7 +70,7 @@ public class DriveEncoderLocalizer extends Localizer {
 
         double deltaForward = (dLF + dRF + dLB + dRB) / 4d;
         double deltaStrafe = (-dLF + dRF + dLB - dRB) / 4d;
-        double deltaHeading = (-dLF + dRF - dLB + dRB) / (2d * (drivetrainWidth + drivetrainLength));
+        double deltaHeading = (-dLF + dRF - dLB + dRB) / (2d * (chassisWidth + chassisLength));
 
         Pose robotDeltas = new Pose(deltaForward, deltaStrafe, deltaHeading);
         Pose globalDelta = MathHelper.exponentialIntegrate(robotDeltas, pose.heading);

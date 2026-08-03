@@ -14,8 +14,8 @@ data class DriveEncoderAttributes(
     val backLeftDirection: Encoder.Direction,
     val backRightDirection: Encoder.Direction,
 
-    val drivetrainWidth: Double,
-    val drivetrainLength: Double,
+    val chassisWidth: Double,
+    val chassisLength: Double,
 
     val odometryData: OdometryPod
 )
