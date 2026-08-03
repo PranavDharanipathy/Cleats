@@ -36,4 +36,32 @@ public class MathHelper {
         return y0 + (y1 - y0) * ((x - x0) / (x1 - x0));
     }
 
+    // Integrates robot-relative motion using the SE(2) exponential map.
+    public static Pose exponentialIntegrate(Pose robotDeltas, double previousHeading) {
+
+        final double deltaHeading = robotDeltas.heading; //theta
+
+        double sinTerm, cosTerm;
+        if (FastMath.abs(deltaHeading) < 1e-3) {
+            /* when the robot barely turns, dividing by delta theta (deltaHeading) becomes wonky
+            so we use Taylor expansion instead. */
+            sinTerm = 1d - (deltaHeading * deltaHeading) / 6d; //approximation of the Maclaurin series used to calculate sin(theta)
+            cosTerm = deltaHeading / 2d; //approximation of the Maclaurin series used to calculate cos(theta)
+        } else {
+            sinTerm = FastMath.sin(deltaHeading) / deltaHeading;
+            cosTerm = (1d - FastMath.cos(deltaHeading)) / deltaHeading;
+        }
+
+        double localX = robotDeltas.x * sinTerm - robotDeltas.y * cosTerm;
+        double localY = robotDeltas.x * cosTerm + robotDeltas.y * sinTerm;
+
+        final double cosHeading = FastMath.cos(previousHeading);
+        final double sinHeading = FastMath.sin(previousHeading);
+
+        double globalX = localX * cosHeading - localY * sinHeading;
+        double globalY = localX * sinHeading + localY * cosHeading;
+
+        return new Pose(globalX, globalY, deltaHeading);
+    }
+
 }

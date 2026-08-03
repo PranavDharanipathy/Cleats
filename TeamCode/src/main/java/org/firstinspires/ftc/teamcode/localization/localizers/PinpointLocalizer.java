@@ -10,24 +10,27 @@ import org.firstinspires.ftc.teamcode.localization.Localizer;
 import org.firstinspires.ftc.teamcode.math.Pose;
 
 public class PinpointLocalizer extends Localizer {
+
     private final GoBildaPinpointDriver localizer;
 
     public PinpointLocalizer(HardwareMap hardwareMap, PinpointAttributes lAttributes) {
 
         localizer = hardwareMap.get(GoBildaPinpointDriver.class, lAttributes.getDeviceName());
 
-        localizer.setOffsets(lAttributes.getForwardPodOffset(), lAttributes.getStrafePodOffset(), DistanceUnit.MM);
-        localizer.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+        localizer.setOffsets(lAttributes.getForwardPodOffsetMM(), lAttributes.getStrafePodOffsetMM(), DistanceUnit.MM);
+
+        double mmPerTick = lAttributes.getOdometryPodData().getInchesPerTick() * 25.4;
+        localizer.setEncoderResolution(1 / mmPerTick, DistanceUnit.MM);
+
         localizer.setEncoderDirections(lAttributes.getForwardPodDirection(), lAttributes.getStrafePodDirection());
         localizer.resetPosAndIMU();
 
         localizer.setPosition(new Pose2D(DistanceUnit.INCH, 0,0, AngleUnit.RADIANS, 0));
 
-        currTime = 0;
-        startTime = System.nanoTime() * 1e-9;
+        currTime = System.nanoTime() * 1e-9;
     }
 
-    private double prevTime, currTime, startTime;
+    private double prevTime, currTime;
 
     @Override
     public void setPose(Pose pose) {
@@ -43,7 +46,7 @@ public class PinpointLocalizer extends Localizer {
         pose = Pose.pose2DToPose(localizer.getPosition());
 
         prevTime = currTime;
-        currTime = (System.nanoTime() * 1e-9) - startTime;
+        currTime = System.nanoTime() * 1e-9;
         deltaTime = currTime - prevTime;
 
         if (deltaTime <= 0) return;
